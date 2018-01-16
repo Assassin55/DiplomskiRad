@@ -1,11 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="407.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.tvz.bnemanic.application.MainController">
    <children>
-      <Label alignment="CENTER" prefHeight="57.0" prefWidth="150.0" text="Dinamo" />
+      <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <TextField fx:id="txtSearch" prefHeight="39.0" prefWidth="800.0" promptText="Unesite pojam...">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="95.0" text="Traži">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <TabPane prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab fx:id="tabLevenstain" closable="false" text="Levenstein">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab" />
+            </content>
+          </Tab>
+          <Tab closable="false" text="Needleman-Wunsch">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab closable="false" text="Jaro-Winkler">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab closable="false" text="Cosine">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab closable="false" text="Jaccard">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </TabPane>
    </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
 </VBox>
