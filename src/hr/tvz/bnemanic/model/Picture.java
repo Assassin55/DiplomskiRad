@@ -4,7 +4,7 @@ public class Picture {
 	
 	private String name;
 	private String description;
-	private float result;
+	private Float result;
 	private boolean accuracy;
 	
 	public Picture(String name, String description) {
@@ -28,11 +28,11 @@ public class Picture {
 		this.description = description;
 	}
 
-	public float getResult() {
+	public Float getResult() {
 		return result;
 	}
 
-	public void setResult(float result) {
+	public void setResult(Float result) {
 		this.result = result;
 	}
 

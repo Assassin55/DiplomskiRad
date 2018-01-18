@@ -38,11 +38,12 @@
             <content>
               <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="levensteinTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <TableView fx:id="levensteinTable" layoutX="14.0" layoutY="14.0" minWidth="660.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                           <columns>
                               <TableColumn fx:id="levensteinIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
                             <TableColumn fx:id="levensteinNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
                             <TableColumn fx:id="levensteinDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                              <TableColumn fx:id="levensteinResultColumn" minWidth="200.0" prefWidth="-1.0" text="Rezultat" />
                           </columns>
                            <opaqueInsets>
                               <Insets />
@@ -60,11 +61,12 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="needlemanTable" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <TableView fx:id="needlemanTable" minWidth="660.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <columns>
                               <TableColumn fx:id="needlemanIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
                               <TableColumn fx:id="needlemanNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
                               <TableColumn fx:id="needlemanDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                              <TableColumn fx:id="needlemanResultColumn" minWidth="200.0" prefWidth="-1.0" text="Rezultat" />
                            </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -74,11 +76,12 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="jaroTable" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <TableView fx:id="jaroTable" minWidth="660.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <columns>
                               <TableColumn fx:id="jaroIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
                               <TableColumn fx:id="jaroNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
                               <TableColumn fx:id="jaroDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                              <TableColumn fx:id="jaroResultColumn" minWidth="200.0" prefWidth="-1.0" text="Rezultat" />
                            </columns>
                         </TableView>
                      </children>
@@ -89,11 +92,12 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="cosineTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <TableView fx:id="cosineTable" layoutX="14.0" layoutY="14.0" minWidth="660.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                           <columns>
                               <TableColumn fx:id="cosineIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
                             <TableColumn fx:id="cosineNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
                             <TableColumn fx:id="cosineDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                              <TableColumn fx:id="cosineResultColumn" minWidth="200.0" prefWidth="-1.0" text="Rezultat" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -103,11 +107,12 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="jaccardTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <TableView fx:id="jaccardTable" layoutX="14.0" layoutY="14.0" minWidth="660.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                           <columns>
                               <TableColumn fx:id="jaccardIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
                             <TableColumn fx:id="jaccardNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
                             <TableColumn fx:id="jaccardDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                              <TableColumn fx:id="jaccardResultColumn" minWidth="200.0" prefWidth="-1.0" text="Rezultat" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>

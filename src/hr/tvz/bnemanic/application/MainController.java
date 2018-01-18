@@ -42,6 +42,9 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<Picture, String> levensteinDescriptionColumn;
 	
+	@FXML
+	TableColumn<Picture, Float> levensteinResultColumn;
+	
 	
 	@FXML
 	TableView<Picture> needlemanTable;
@@ -54,6 +57,9 @@ public class MainController implements Initializable {
 	
 	@FXML
 	TableColumn<Picture, String> needlemanDescriptionColumn;
+	
+	@FXML
+	TableColumn<Picture, Float> needlemanResultColumn;
 	
 	
 	@FXML
@@ -68,6 +74,9 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<Picture, String> jaroDescriptionColumn;
 	
+	@FXML
+	TableColumn<Picture, Float> jaroResultColumn;
+	
 	
 	@FXML
 	TableView<Picture> cosineTable;
@@ -81,6 +90,9 @@ public class MainController implements Initializable {
 	@FXML
 	TableColumn<Picture, String> cosineDescriptionColumn;
 	
+	@FXML
+	TableColumn<Picture, Float> cosineResultColumn;
+	
 	
 	@FXML
 	TableView<Picture> jaccardTable;
@@ -93,6 +105,9 @@ public class MainController implements Initializable {
 	
 	@FXML
 	TableColumn<Picture, String> jaccardDescriptionColumn;
+	
+	@FXML
+	TableColumn<Picture, Float> jaccardResultColumn;
 	
 	public void search() {		
 		SqliteConnection sqliteConn = new SqliteConnection();
@@ -113,30 +128,35 @@ public class MainController implements Initializable {
 				.getItems().indexOf(column.getValue()) + 1));
 		levensteinNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
 		levensteinDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
+		levensteinResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 		
 		needlemanIndexColumn.setSortable(false);
 		needlemanIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(needlemanTable
 				.getItems().indexOf(column.getValue()) + 1));
 		needlemanNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
 		needlemanDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
+		needlemanResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 		
 		jaroIndexColumn.setSortable(false);
 		jaroIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(jaroTable
 				.getItems().indexOf(column.getValue()) + 1));
 		jaroNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
 		jaroDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
+		jaroResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 		
 		cosineIndexColumn.setSortable(false);
 		cosineIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(cosineTable
 				.getItems().indexOf(column.getValue()) + 1));
 		cosineNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
 		cosineDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
+		cosineResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 		
 		jaccardIndexColumn.setSortable(false);
 		jaccardIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(jaccardTable
 				.getItems().indexOf(column.getValue()) + 1));
 		jaccardNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
 		jaccardDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
+		jaccardResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 	}
 
 }
