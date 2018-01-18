@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -34,34 +36,81 @@
         <tabs>
           <Tab fx:id="tabLevenstain" closable="false" text="Levenstein">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+              <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <Label fx:id="lblResult" alignment="CENTER" layoutX="333.0" layoutY="118.0" prefHeight="72.0" prefWidth="109.0">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
+                        <TableView fx:id="levensteinTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                          <columns>
+                              <TableColumn fx:id="levensteinIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
+                            <TableColumn fx:id="levensteinNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
+                            <TableColumn fx:id="levensteinDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                          </columns>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
           <Tab closable="false" text="Needleman-Wunsch">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+                     <children>
+                        <Label fx:id="lblResult" alignment="CENTER" layoutX="596.0" layoutY="118.0" prefHeight="72.0" prefWidth="109.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="needlemanTable" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <columns>
+                              <TableColumn fx:id="needlemanIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
+                              <TableColumn fx:id="needlemanNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
+                              <TableColumn fx:id="needlemanDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab closable="false" text="Jaro-Winkler">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tab">
+                     <children>
+                        <TableView fx:id="jaroTable" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <columns>
+                              <TableColumn fx:id="jaroIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
+                              <TableColumn fx:id="jaroNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
+                              <TableColumn fx:id="jaroDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
             <Tab closable="false" text="Cosine">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+                     <children>
+                        <TableView fx:id="cosineTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                          <columns>
+                              <TableColumn fx:id="cosineIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
+                            <TableColumn fx:id="cosineNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
+                            <TableColumn fx:id="cosineDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab closable="false" text="Jaccard">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+                     <children>
+                        <TableView fx:id="jaccardTable" layoutX="14.0" layoutY="14.0" minWidth="460.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                          <columns>
+                              <TableColumn fx:id="jaccardIndexColumn" minWidth="50.0" prefWidth="-1.0" text="#" />
+                            <TableColumn fx:id="jaccardNameColumn" minWidth="200.0" prefWidth="-1.0" text="Ime" />
+                            <TableColumn fx:id="jaccardDescriptionColumn" minWidth="200.0" prefWidth="-1.0" text="Opis" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
