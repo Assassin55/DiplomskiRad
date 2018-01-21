@@ -17,7 +17,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import hr.tvz.bnemanic.database.*;
+import hr.tvz.bnemanic.logic.SimilarityMeasurement;
 import hr.tvz.bnemanic.model.Picture;
+import hr.tvz.bnemanic.logic.FormatResults;
 
 public class MainController implements Initializable {
 	
@@ -114,11 +116,17 @@ public class MainController implements Initializable {
 		ObservableList<Picture> pictures = sqliteConn.getPictures();
 		lblResult.setText(pictures.size() + "");
 		
-		levensteinTable.setItems(pictures);
-		needlemanTable.setItems(pictures);
-		jaroTable.setItems(pictures);
-		cosineTable.setItems(pictures);
+		FormatResults fr = new FormatResults();
+		fr.calculateResults(pictures, txtSearch.getText());
+		
+		levensteinTable.setItems(fr.getLevenstheinList());
+		needlemanTable.setItems(fr.getNeedlemanList());
+		jaroTable.setItems(fr.getJaroList());
+		cosineTable.setItems(fr.getCosineList());
 		jaccardTable.setItems(pictures);
+		
+//		SimilarityMeasurement sm = new SimilarityMeasurement();
+//		sm.needleman("dinamo", "dinamo zagreb");
 	}
 
 	@Override

@@ -11,6 +11,13 @@ public class Picture {
 		this.name = name;
 		this.description = description;
 	}
+	
+	public Picture(Picture picture) {
+		this.name = picture.getName();
+		this.description = picture.getDescription();
+		this.result = picture.getResult();
+		this.accuracy = picture.isAccuracy();
+	}
 
 	public String getName() {
 		return name;
