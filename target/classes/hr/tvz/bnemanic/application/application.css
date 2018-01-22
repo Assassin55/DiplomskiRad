@@ -22,3 +22,7 @@
      -fx-border-width: 0;
      -fx-border-color: -fx-focus-color;	
 }
+
+.table-column {
+	-fx-alignment: CENTER;
+}

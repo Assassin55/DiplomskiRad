@@ -5,6 +5,7 @@ import static org.simmetrics.builders.StringMetricBuilder.with;
 import org.simmetrics.StringDistance;
 import org.simmetrics.StringMetric;
 import org.simmetrics.metrics.CosineSimilarity;
+import org.simmetrics.metrics.Jaccard;
 import org.simmetrics.metrics.JaroWinkler;
 import org.simmetrics.metrics.Levenshtein;
 import org.simmetrics.metrics.NeedlemanWunch;
@@ -64,6 +65,19 @@ public class SimilarityMeasurement {
 	public float cosine(String description, String searchTerm) {
 		StringMetric metric =
 				with(new CosineSimilarity<String>())
+				.simplify(Simplifiers.toLowerCase())
+				.simplify(Simplifiers.replaceNonWord())
+				.tokenize(Tokenizers.whitespace())
+				.build();
+		
+		float result = metric.compare(description, searchTerm);
+		
+		return result;
+	}
+	
+	public float jaccard(String description, String searchTerm) {
+		StringMetric metric =
+				with(new Jaccard<String>())
 				.simplify(Simplifiers.toLowerCase())
 				.simplify(Simplifiers.replaceNonWord())
 				.tokenize(Tokenizers.whitespace())

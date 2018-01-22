@@ -1,10 +1,12 @@
 package hr.tvz.bnemanic.logic;
 
+import java.io.File;
 import java.util.Collections;
 
 import hr.tvz.bnemanic.model.Picture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 
 public class FormatResults {
 	
@@ -33,14 +35,6 @@ public class FormatResults {
 			float result = sm.levenstein(pic.getDescription(), searchTerm);
 			pic.setResult(result);
 		}
-		
-//		Collections.sort(pictures, new PictureSorter());
-//		
-//		for(int i = 0; i < SELECTOR; i++) {
-//			Picture picture = new Picture(pictures.get(i));
-//			levenstheinList.add(picture);
-//		}
-		
 //		sortira listu i uzima njenih prvih 50 èlanova za prikaz u tablici
 		levenstheinList = listCreation(pictures, levenstheinList);
 		
@@ -60,8 +54,13 @@ public class FormatResults {
 			float result = sm.cosine(pic.getDescription(), searchTerm);
 			pic.setResult(result);
 		}
-		cosineList = listCreation(pictures, cosineList);
+		 cosineList = listCreation(pictures, cosineList);
 		
+		for(Picture pic : pictures) {
+			float result = sm.jaccard(pic.getDescription(), searchTerm);
+			pic.setResult(result);
+		}
+		jaccardList = listCreation(pictures, jaccardList);	
 	}
 	
 	public ObservableList<Picture> listCreation(ObservableList<Picture> pictures, 
@@ -70,6 +69,7 @@ public class FormatResults {
 		
 		for(int i = 0; i < SELECTOR; i++) {
 			Picture picture = new Picture(pictures.get(i));
+			picture.showImage();
 			newList.add(picture);
 		}
 		
