@@ -1,9 +1,6 @@
 package hr.tvz.bnemanic.model;
 
-import java.io.File;
-
 import hr.tvz.bnemanic.logic.Constants;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

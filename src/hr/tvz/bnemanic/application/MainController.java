@@ -3,42 +3,38 @@ package hr.tvz.bnemanic.application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 import hr.tvz.bnemanic.database.*;
-import hr.tvz.bnemanic.logic.SimilarityMeasurement;
 import hr.tvz.bnemanic.model.Picture;
+import hr.tvz.bnemanic.logic.Constants;
 import hr.tvz.bnemanic.logic.FormatResults;
 
 public class MainController implements Initializable {
 	
 	@FXML
 	TextField txtSearch;
+	
+	@FXML
+	Button excelBtn;
 	
 	@FXML
 	TableView<Picture> levensteinTable;	
@@ -56,26 +52,58 @@ public class MainController implements Initializable {
 	TableView<Picture> jaccardTable;
 	
 	FormatResults fr = new FormatResults();
+	ObservableList<Picture> pictures;
 	
-	public void search() {		
-		SqliteConnection sqliteConn = new SqliteConnection();
-		ObservableList<Picture> pictures = sqliteConn.getPictures();
+	String searchedText;
+	
+	public void search() {
+		searchedText = txtSearch.getText().trim();
 		
-		fr.calculateResults(pictures, txtSearch.getText());
+		if(!searchedText.equals("")) {
+			
+			if(pictures == null) {
+				try {
+					SqliteConnection sqliteConn = new SqliteConnection();
+					pictures = sqliteConn.getPictures();
+				} catch(SQLException e) {
+					System.out.println("Došlo je do greške prilikom dohvaæanja podataka iz baze");
+					e.printStackTrace();
+					showError("Došlo je do greške prilikom dohvaæanja podataka iz baze!");
+				}	
+			}
+			
+			fr.calculateResults(pictures, searchedText);
+			
+			levensteinTable.setItems(fr.getLevenstheinList());
+			needlemanTable.setItems(fr.getNeedlemanList());
+			jaroTable.setItems(fr.getJaroList());
+			cosineTable.setItems(fr.getCosineList());
+			jaccardTable.setItems(fr.getJaccardList());
+			
+			levensteinTable.scrollTo(0);
+			needlemanTable.scrollTo(0);
+			jaroTable.scrollTo(0);
+			cosineTable.scrollTo(0);
+			jaccardTable.scrollTo(0);
+			
+			excelBtn.setDisable(false);
+		} else {
+			showError("Niste unjeli pojam za pretraživanje!");
+		}
 		
-		levensteinTable.setItems(fr.getLevenstheinList());
-		needlemanTable.setItems(fr.getNeedlemanList());
-		jaroTable.setItems(fr.getJaroList());
-		cosineTable.setItems(fr.getCosineList());
-		jaccardTable.setItems(fr.getJaccardList());
 	}
 	
-	public void excelExport() {	
+	public void excelExport() {		
 		try {
-			fr.excelExport(txtSearch.getText());
+			fr.excelExport(searchedText);
+			showInfo("Uspješno spremljeno",
+					"Excel datoteka je uspješno spremljena na lokaciju " + Constants.XLS_PATH + 
+					searchedText + Constants.XLS_EXTENSION);
+			excelBtn.setDisable(true);
 		} catch(IOException e) {
 			System.out.println("Došlo je do greške kod kreiranja datoteke");
 			e.printStackTrace();
+			showError("Došlo je do greške prilikom spremanja datoteke!");
 		}
 	}
 
@@ -86,6 +114,8 @@ public class MainController implements Initializable {
 		createColumns(jaroTable);
 		createColumns(cosineTable);
 		createColumns(jaccardTable);
+		
+		excelBtn.setDisable(true);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -136,6 +166,22 @@ public class MainController implements Initializable {
 		
 		table.getColumns().addAll(index, name, image, description, result, accuracy);
 
+	}
+	
+	public void showInfo(String header, String info) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Informacija");
+		alert.setHeaderText(header);
+		alert.setContentText(info);
+		alert.show();
+	}
+	
+	public void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Greška");
+		alert.setHeaderText("Došlo je do greške!");
+		alert.setContentText(message);
+		alert.show();
 	}
 
 }

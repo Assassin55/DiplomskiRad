@@ -22,29 +22,24 @@ public class SqliteConnection {
 		}
 	}
 	
-	public ObservableList<Picture> getPictures() {
+	public ObservableList<Picture> getPictures() throws SQLException {
 		Connection connection = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 //		int result = -100;
 		ObservableList<Picture> list = FXCollections.observableArrayList();
 		
-		try {
-			connection = connect();
-			ps = connection.prepareStatement(GET_ALL_PICTURES);
-			rs = ps.executeQuery();	
+		connection = connect();
+		ps = connection.prepareStatement(GET_ALL_PICTURES);
+		rs = ps.executeQuery();	
 			
-			while(rs.next()) {
-				String name = rs.getString(1);
-				String description = rs.getString(2);
-				Picture picture = new Picture(name, description);
-				list.add(picture);
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Došlo je do greške kod èitanja iz baze");
-			e.printStackTrace();
+		while(rs.next()) {
+			String name = rs.getString(1);
+			String description = rs.getString(2);
+			Picture picture = new Picture(name, description);
+			list.add(picture);
 		}
+			
 		
 		return list;
 	}

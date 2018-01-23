@@ -1,6 +1,5 @@
 package hr.tvz.bnemanic.logic;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collections;
@@ -15,7 +14,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import hr.tvz.bnemanic.model.Picture;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
 public class FormatResults {  
 	

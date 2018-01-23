@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -25,7 +24,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#excelExport" prefHeight="39.0" prefWidth="95.0" text="Excel">
+            <Button fx:id="excelBtn" mnemonicParsing="false" onAction="#excelExport" prefHeight="39.0" prefWidth="95.0" text="Excel">
                <font>
                   <Font size="18.0" />
                </font>
@@ -38,49 +37,69 @@
       <TabPane prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
           <Tab fx:id="tabLevenstain" closable="false" text="Levenstein">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+               <content>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="levensteinTable" layoutX="14.0" layoutY="14.0" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <TableView fx:id="levensteinTable" minWidth="860.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
                         </TableView>
-                     </children></AnchorPane>
-            </content>
+                     </children>
+                  </HBox>
+               </content>
           </Tab>
           <Tab closable="false" text="Needleman-Wunsch">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+               <content>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="needlemanTable" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                     </children></AnchorPane>
-            </content>
+                        <TableView fx:id="needlemanTable" minWidth="860.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </content>
           </Tab>
             <Tab closable="false" text="Jaro-Winkler">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="tab">
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="jaroTable" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TableView fx:id="jaroTable" minWidth="860.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TableView>
                      </children>
-                  </AnchorPane>
+                  </HBox>
                </content>
             </Tab>
             <Tab closable="false" text="Cosine">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+               <content>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="cosineTable" layoutX="14.0" layoutY="14.0" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                     </children></AnchorPane>
-              </content>
+                        <TableView fx:id="cosineTable" minWidth="860.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </content>
             </Tab>
             <Tab closable="false" text="Jaccard">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+               <content>
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <TableView fx:id="jaccardTable" layoutX="14.0" layoutY="14.0" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                     </children></AnchorPane>
-              </content>
+                        <TableView fx:id="jaccardTable" minWidth="860.0">
+                           <HBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </content>
             </Tab>
         </tabs>
          <VBox.margin>
