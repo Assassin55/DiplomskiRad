@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -16,12 +15,17 @@
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="600.0" spacing="10.0">
          <children>
-            <TextField fx:id="txtSearch" prefHeight="39.0" prefWidth="800.0" promptText="Unesite pojam...">
+            <TextField fx:id="txtSearch" onAction="#search" prefHeight="39.0" prefWidth="800.0" promptText="Unesite pojam...">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
             <Button mnemonicParsing="false" onAction="#search" prefHeight="39.0" prefWidth="95.0" text="Traži">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#excelExport" prefHeight="39.0" prefWidth="95.0" text="Excel">
                <font>
                   <Font size="18.0" />
                </font>
@@ -35,7 +39,7 @@
         <tabs>
           <Tab fx:id="tabLevenstain" closable="false" text="Levenstein">
             <content>
-              <AnchorPane fx:id="anchorPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
                         <TableView fx:id="levensteinTable" layoutX="14.0" layoutY="14.0" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <opaqueInsets>
@@ -49,11 +53,6 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tab">
                      <children>
-                        <Label fx:id="lblResult" alignment="CENTER" layoutX="596.0" layoutY="118.0" prefHeight="72.0" prefWidth="109.0">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
                         <TableView fx:id="needlemanTable" minWidth="860.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
                      </children></AnchorPane>
             </content>

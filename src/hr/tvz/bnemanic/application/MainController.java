@@ -18,8 +18,17 @@ import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import hr.tvz.bnemanic.database.*;
 import hr.tvz.bnemanic.logic.SimilarityMeasurement;
@@ -32,99 +41,26 @@ public class MainController implements Initializable {
 	TextField txtSearch;
 	
 	@FXML
-	Label lblResult;
+	TableView<Picture> levensteinTable;	
 	
 	@FXML
-	AnchorPane anchorPane;
+	TableView<Picture> needlemanTable;	
 	
 	@FXML
-	TableView<Picture> levensteinTable;
-	
-//	@FXML
-//	TableColumn<Picture, Number> levensteinIndexColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> levensteinNameColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, ImageView> levensteinImageColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> levensteinDescriptionColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, Float> levensteinResultColumn;
-	
+	TableView<Picture> jaroTable;	
 	
 	@FXML
-	TableView<Picture> needlemanTable;
-	
-//	@FXML
-//	TableColumn<Picture, Number> needlemanIndexColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> needlemanNameColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> needlemanDescriptionColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, Float> needlemanResultColumn;
-	
-	
-	@FXML
-	TableView<Picture> jaroTable;
-	
-//	@FXML
-//	TableColumn<Picture, Number> jaroIndexColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> jaroNameColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> jaroDescriptionColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, Float> jaroResultColumn;
-	
-	
-	@FXML
-	TableView<Picture> cosineTable;
-	
-//	@FXML
-//	TableColumn<Picture, Number> cosineIndexColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> cosineNameColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> cosineDescriptionColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, Float> cosineResultColumn;
-	
+	TableView<Picture> cosineTable;	
 	
 	@FXML
 	TableView<Picture> jaccardTable;
 	
-//	@FXML
-//	TableColumn<Picture, Number> jaccardIndexColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> jaccardNameColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, String> jaccardDescriptionColumn;
-//	
-//	@FXML
-//	TableColumn<Picture, Float> jaccardResultColumn;
+	FormatResults fr = new FormatResults();
 	
 	public void search() {		
 		SqliteConnection sqliteConn = new SqliteConnection();
 		ObservableList<Picture> pictures = sqliteConn.getPictures();
-		lblResult.setText(pictures.size() + "");
 		
-		FormatResults fr = new FormatResults();
 		fr.calculateResults(pictures, txtSearch.getText());
 		
 		levensteinTable.setItems(fr.getLevenstheinList());
@@ -133,45 +69,18 @@ public class MainController implements Initializable {
 		cosineTable.setItems(fr.getCosineList());
 		jaccardTable.setItems(fr.getJaccardList());
 	}
+	
+	public void excelExport() {	
+		try {
+			fr.excelExport(txtSearch.getText());
+		} catch(IOException e) {
+			System.out.println("Došlo je do greške kod kreiranja datoteke");
+			e.printStackTrace();
+		}
+	}
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-//		levensteinIndexColumn.setSortable(false);
-//		levensteinIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(levensteinTable
-//				.getItems().indexOf(column.getValue()) + 1));
-//		levensteinNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
-//		levensteinImageColumn.setCellValueFactory(new PropertyValueFactory<Picture, ImageView>("image"));
-//		levensteinDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
-//		levensteinResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
-//		
-//		needlemanIndexColumn.setSortable(false);
-//		needlemanIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(needlemanTable
-//				.getItems().indexOf(column.getValue()) + 1));
-//		needlemanNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
-//		needlemanDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
-//		needlemanResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
-//		
-//		jaroIndexColumn.setSortable(false);
-//		jaroIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(jaroTable
-//				.getItems().indexOf(column.getValue()) + 1));
-//		jaroNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
-//		jaroDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
-//		jaroResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
-//		
-//		cosineIndexColumn.setSortable(false);
-//		cosineIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(cosineTable
-//				.getItems().indexOf(column.getValue()) + 1));
-//		cosineNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
-//		cosineDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
-//		cosineResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
-//		
-//		jaccardIndexColumn.setSortable(false);
-//		jaccardIndexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(jaccardTable
-//				.getItems().indexOf(column.getValue()) + 1));
-//		jaccardNameColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("name"));
-//		jaccardDescriptionColumn.setCellValueFactory(new PropertyValueFactory<Picture, String>("description"));
-//		jaccardResultColumn.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
-		
+	public void initialize(URL arg0, ResourceBundle arg1) {		
 		createColumns(levensteinTable);
 		createColumns(needlemanTable);
 		createColumns(jaroTable);
@@ -203,6 +112,7 @@ public class MainController implements Initializable {
 		result.setMinWidth(200);
 		result.setCellValueFactory(new PropertyValueFactory<Picture, Float>("result"));
 		
+		@SuppressWarnings("rawtypes")
 		TableColumn accuracy = new TableColumn("Toènost");
 		accuracy.setMinWidth(150);
 		accuracy.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Picture, CheckBox>, ObservableValue<CheckBox>>() {

@@ -2,13 +2,12 @@ package hr.tvz.bnemanic.model;
 
 import java.io.File;
 
+import hr.tvz.bnemanic.logic.Constants;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Picture {
-	public static final String PATH = "file:C:\\naps\\NAPS_L\\";
-	public static final String EXTENSION = ".jpg";
 	
 	private String name;
 	private String description;
@@ -19,6 +18,7 @@ public class Picture {
 	public Picture(String name, String description) {
 		this.name = name;
 		this.description = description;
+		this.accuracy = false;
 		this.image = new ImageView();
 	}
 	
@@ -31,15 +31,8 @@ public class Picture {
 	}
 	
 	public void showImage() {
-		
-//		File file = new File(PATH + this.name + EXTENSION);
-		Image pic = new Image(PATH + this.name + EXTENSION, 180, 180, true, false);
+		Image pic = new Image(Constants.IMG_PATH + this.name + Constants.IMG_EXTENSION, 180, 180, true, false);
 		image.setImage(pic);
-	}
-	
-	public void setImageProperties() {
-		this.image.setPreserveRatio(true);
-		this.image.setFitWidth(180);
 	}
 
 	public String getName() {
