@@ -1,8 +1,10 @@
 package hr.tvz.bnemanic.application;
 
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -13,14 +15,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import hr.tvz.bnemanic.database.*;
@@ -29,6 +30,9 @@ import hr.tvz.bnemanic.logic.Constants;
 import hr.tvz.bnemanic.logic.FormatResults;
 
 public class MainController implements Initializable {
+	
+	@FXML
+	VBox vBox;
 	
 	@FXML
 	TextField txtSearch;
@@ -59,52 +63,98 @@ public class MainController implements Initializable {
 	public void search() {
 		searchedText = txtSearch.getText().trim();
 		
+//		dohvat podataka iz baze i dohvat i sortiranje slika, nalazi se u 2 zasebne dretve, 
+//		dok je update GUI-a u glavnoj dretvi
+		
 		if(!searchedText.equals("")) {
+			vBox.getScene().cursorProperty().set(Cursor.WAIT);
+			
+			Task<Void> taskCalculate = new Task<Void>() {
+				@Override
+				protected Void call() throws Exception {					
+					fr.calculateResults(pictures, searchedText);				
+					return null;
+				}	
+			};
+			taskCalculate.setOnSucceeded(e -> setGUI());
+			
+//			Prvo se pokreæe dretva za dohvat podataka iz baze
+//			Ako ona uspješno završi, onda se sinkrono pokreæe dretva za dohvat slika i sort
 			
 			if(pictures == null) {
-				try {
-					SqliteConnection sqliteConn = new SqliteConnection();
-					pictures = sqliteConn.getPictures();
-				} catch(SQLException e) {
-					System.out.println("Došlo je do greške prilikom dohvaæanja podataka iz baze");
-					e.printStackTrace();
-					showError("Došlo je do greške prilikom dohvaæanja podataka iz baze!");
-				}	
+				Task<Void> taskDatabase = new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {					
+						SqliteConnection sqliteConn = new SqliteConnection();
+						pictures = sqliteConn.getPictures();				
+						return null;
+					}	
+				};
+				taskDatabase.setOnSucceeded(e -> new Thread(taskCalculate).start());
+				taskDatabase.setOnFailed(e -> databaseFailed(taskDatabase.getException()));
+				
+				new Thread(taskDatabase).start();	
+			} else {			
+				new Thread(taskCalculate).start();
 			}
-			
-			fr.calculateResults(pictures, searchedText);
-			
-			levensteinTable.setItems(fr.getLevenstheinList());
-			needlemanTable.setItems(fr.getNeedlemanList());
-			jaroTable.setItems(fr.getJaroList());
-			cosineTable.setItems(fr.getCosineList());
-			jaccardTable.setItems(fr.getJaccardList());
-			
-			levensteinTable.scrollTo(0);
-			needlemanTable.scrollTo(0);
-			jaroTable.scrollTo(0);
-			cosineTable.scrollTo(0);
-			jaccardTable.scrollTo(0);
-			
-			excelBtn.setDisable(false);
 		} else {
 			showError("Niste unjeli pojam za pretraživanje!");
-		}
-		
+		}	
 	}
 	
-	public void excelExport() {		
-		try {
-			fr.excelExport(searchedText);
-			showInfo("Uspješno spremljeno",
-					"Excel datoteka je uspješno spremljena na lokaciju " + Constants.XLS_PATH + 
-					searchedText + Constants.XLS_EXTENSION);
-			excelBtn.setDisable(true);
-		} catch(IOException e) {
-			System.out.println("Došlo je do greške kod kreiranja datoteke");
-			e.printStackTrace();
-			showError("Došlo je do greške prilikom spremanja datoteke!");
-		}
+	public void excelExport() {
+		vBox.getScene().cursorProperty().set(Cursor.WAIT);
+		
+		Task<Void> taskExcel = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {					
+				fr.excelExport(searchedText);				
+				return null;
+			}	
+		};
+		taskExcel.setOnSucceeded(e -> finalizeExcel());
+		taskExcel.setOnFailed(e -> excelFailed(taskExcel.getException()));
+		
+		new Thread(taskExcel).start();	
+	}
+	
+	public void setGUI() {
+		levensteinTable.setItems(fr.getLevenstheinList());
+		needlemanTable.setItems(fr.getNeedlemanList());
+		jaroTable.setItems(fr.getJaroList());
+		cosineTable.setItems(fr.getCosineList());
+		jaccardTable.setItems(fr.getJaccardList());
+		
+		levensteinTable.scrollTo(0);
+		needlemanTable.scrollTo(0);
+		jaroTable.scrollTo(0);
+		cosineTable.scrollTo(0);
+		jaccardTable.scrollTo(0);
+		
+		excelBtn.setDisable(false);
+		vBox.getScene().cursorProperty().set(Cursor.DEFAULT);
+	}
+	
+	public void finalizeExcel() {
+		showInfo("Uspješno spremljeno",
+				"Excel datoteka je uspješno spremljena na lokaciju " + Constants.XLS_PATH + 
+				searchedText + Constants.XLS_EXTENSION);
+		excelBtn.setDisable(true);
+		vBox.getScene().cursorProperty().set(Cursor.DEFAULT);
+	}
+	
+	public void excelFailed(Throwable e) {
+		System.out.println("Došlo je do greške kod kreiranja datoteke");
+		e.printStackTrace();
+		showError("Došlo je do greške prilikom spremanja datoteke!");
+		vBox.getScene().cursorProperty().set(Cursor.DEFAULT);
+	}
+	
+	public void databaseFailed(Throwable e) {
+		System.out.println("Došlo je do greške prilikom dohvaæanja podataka iz baze");
+		e.printStackTrace();
+		showError("Došlo je do greške prilikom dohvaæanja podataka iz baze!");
+		vBox.getScene().cursorProperty().set(Cursor.DEFAULT);
 	}
 
 	@Override

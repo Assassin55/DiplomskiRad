@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="407.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.tvz.bnemanic.application.MainController">
+<VBox fx:id="vBox" prefHeight="407.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hr.tvz.bnemanic.application.MainController">
    <children>
       <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="600.0" spacing="10.0">
          <children>

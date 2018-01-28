@@ -70,6 +70,7 @@ public class FormatResults {
 	
 	public ObservableList<Picture> listCreation(ObservableList<Picture> pictures, 
 			ObservableList<Picture> newList) {
+		Collections.sort(pictures, new PictureNameSorter());
 		Collections.sort(pictures, new PictureSorter());
 		if(newList.size() > 0) {
 			newList.clear();
